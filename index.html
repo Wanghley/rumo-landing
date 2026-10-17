@@ -299,6 +299,142 @@
   </div>
 </footer>
 
+<!-- ================= TEMPLATES (single source for every phone, screen and widget) ================= -->
+<template id="tpl-phone">
+  <div class="phone" data-tab="today">
+    <div class="phone__frame">
+      <span class="phone__island" data-island></span>
+      <div class="phone__screen">
+        <div class="sbar"><span class="sbar__time">9:41</span><span class="sbar__carrier">rumo</span><span class="sbar__icons"><svg class="ic" aria-hidden="true"><use href="#i-cell-signal-full"/></svg><svg class="ic" aria-hidden="true"><use href="#i-wifi-high"/></svg><svg class="ic" aria-hidden="true"><use href="#i-battery-full"/></svg></span></div>
+        <div class="p-toast" data-phone-toast aria-hidden="true">
+          <span class="p-toast__ic"><svg class="ic" aria-hidden="true"><use href="#i-apple-logo"/></svg></span>
+          <div class="p-toast__body">
+            <b data-phone-toast-t>Café Girassol · R$ 12,50</b>
+            <span data-phone-toast-b>Categorizado como Restaurantes.</span>
+          </div>
+          <span class="p-toast__tag"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span>IA</span></span>
+        </div>
+        <div class="screens"></div>
+        <div class="tabs" aria-hidden="true">
+          <span class="tab tab--today"><svg class="ic"><use href="#i-sun-horizon"/></svg><span data-i18n="tab.today">Hoje</span></span>
+          <span class="tab tab--spend"><svg class="ic"><use href="#i-chart-pie-slice"/></svg><span data-i18n="tab.spend">Gastos</span></span>
+          <span class="tab tab--wallet"><svg class="ic"><use href="#i-wallet"/></svg><span data-i18n="tab.wallet">Carteira</span></span>
+          <span class="tab tab--rumo"><svg class="ic"><use href="#i-navigation-arrow"/></svg><span data-i18n="tab.rumo">Rumo</span></span>
+        </div>
+        <span class="hind"></span>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<!-- screen 1: the month at a glance, alive -->
+<template id="tpl-s1">
+  <section class="screen" data-screen="1" data-tab="today">
+    <div class="s-head">
+      <div><p class="lbl" data-i18n="s1.month">Outubro</p><p class="muted" data-i18n="s1.day">Dia 17 de 31</p></div>
+      <span class="chip-ok" data-spend-chip data-state="ok"><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-spend-chip-label data-i18n="s1.ok">No ritmo</span></span>
+    </div>
+    <div class="spend">
+      <div class="spend__top">
+        <div>
+          <span class="spend__val" data-spend-total>R$ 1.664,60</span>
+          <span class="spend__of"><span data-i18n="s1.of">de</span> <span data-amt="3000" data-cents="0">R$ 3.000</span> · <b data-spend-pct>55%</b></span>
+        </div>
+        <span class="spend__pace-pill"><small data-i18n="ls.paceLbl">Média/dia</small><b data-spend-daily>R$ 95</b></span>
+      </div>
+      <div class="gauge"><i data-spend-bar></i><span class="gauge__pace" style="--p:54.8%"></span></div>
+      <span class="muted" data-spend-left>Sobram R$ 1.335 em 14 dias</span>
+    </div>
+    <ul class="cats">
+      <li data-cat="groc"><span class="cname"><i class="cat-dot cat-dot--groc"></i><span data-i18n="cat.groc">Mercado</span></span><span class="bar"><i style="--d:60ms"></i></span><b data-cat-amt>R$ 612,40</b></li>
+      <li data-cat="dine" data-up><span class="cname"><i class="cat-dot cat-dot--dine"></i><span data-i18n="cat.dine">Restaurantes</span></span><span class="bar"><i style="--d:140ms"></i></span><b data-cat-amt>R$ 418,70</b></li>
+      <li data-cat="trans"><span class="cname"><i class="cat-dot cat-dot--trans"></i><span data-i18n="cat.trans">Transporte</span></span><span class="bar"><i style="--d:220ms"></i></span><b data-cat-amt>R$ 204,10</b></li>
+      <li data-cat="leis"><span class="cname"><i class="cat-dot cat-dot--leis"></i><span data-i18n="cat.leis">Lazer</span></span><span class="bar"><i style="--d:300ms"></i></span><b data-cat-amt>R$ 187,00</b></li>
+      <li data-cat="oth"><span class="cname"><i class="cat-dot cat-dot--oth"></i><span data-i18n="cat.oth">Outros</span></span><span class="bar"><i style="--d:380ms"></i></span><b data-cat-amt>R$ 242,40</b></li>
+    </ul>
+    <div class="feed" data-feed></div>
+  </section>
+</template>
+
+<!-- screen 2: what the AI noticed -->
+<template id="tpl-s2">
+  <section class="screen" data-screen="2" data-tab="rumo">
+    <div class="s-head"><div><p class="lbl" data-i18n="s2.title">Análise do rumo</p><p class="muted" data-i18n="s2.sub">O que mudou em outubro</p></div></div>
+    <article class="insight st" style="--i:0">
+      <span class="lbl"><svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span data-i18n="s2.i1.k">Restaurantes</span></span>
+      <p class="insight__obs" data-i18n="s2.i1.o">Delivery subiu 18% desde setembro.</p>
+      <p class="insight__imp" data-i18n="s2.i1.p">São R$ 63,90 a mais, em 14 compras.</p>
+      <span class="insight__step"><span data-i18n="s2.i1.c">Ver as 14 compras</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+    </article>
+    <article class="insight st" style="--i:1">
+      <span class="lbl"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg><span data-i18n="s2.i2.k">Assinaturas</span></span>
+      <p class="insight__obs" data-i18n="s2.i2.o">Duas assinaturas de música.</p>
+      <p class="insight__imp" data-i18n="s2.i2.p">Cancelar a menor economiza R$ 262,80 por ano.</p>
+      <span class="insight__step"><span data-i18n="s2.i2.c">Ver as duas cobranças</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+    </article>
+    <article class="insight insight--ok st" style="--i:2">
+      <span class="lbl"><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="s2.i3.k">Orçamento</span></span>
+      <p class="insight__obs" data-i18n="s2.i3.o">No ritmo do mês.</p>
+      <p class="insight__imp" data-i18n="s2.i3.p">Sobram R$ 1.335 para 14 dias, cerca de R$ 95 por dia.</p>
+      <span class="insight__step"><span data-i18n="s2.i3.c">Ver o resumo da semana</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+    </article>
+  </section>
+</template>
+
+<!-- screen 3: ask the CFO -->
+<template id="tpl-s3">
+  <section class="screen" data-screen="3" data-tab="rumo">
+    <div class="s-head"><div><p class="lbl" data-i18n="s3.title">Pergunte ao rumo</p><p class="muted" data-i18n="s3.sub">Respostas com os seus números</p></div></div>
+    <div class="chat">
+      <p class="bubble bubble--q st" style="--i:0" data-i18n="s3.q">Posso pedir delivery hoje sem estourar o orçamento?</p>
+      <div class="reply">
+        <span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+        <p class="bubble bubble--a"><span data-i18n="s3.a">Pode. Sobram R$ 1.335 para 14 dias, cerca de R$ 95 por dia. Um pedido seu custa em média R$ 29,90.</span><small data-i18n="s3.src">Com base nos seus gastos de outubro.</small></p>
+      </div>
+    </div>
+    <div class="suggest st" style="--i:3"><span data-i18n="s3.s1">Quanto gastei com mercado?</span><span data-i18n="s3.s2">Onde posso economizar?</span></div>
+    <div class="composer st" style="--i:4"><span data-i18n="s3.ph">Pergunte sobre seus gastos</span><svg class="ic" aria-hidden="true"><use href="#i-paper-plane-tilt"/></svg></div>
+  </section>
+</template>
+
+<!-- widgets -->
+<template id="tpl-w-month">
+  <div class="widget widget--s">
+    <span class="widget__glow"></span>
+    <div class="widget__head"><span><svg viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg><span data-i18n="w.month">Outubro</span></span></div>
+    <div>
+      <span class="widget__val" data-spend-total data-cents="0">R$ 1.665</span>
+      <p class="widget__of"><span data-i18n="w.of">de</span> <span data-amt="3000" data-cents="0">R$ 3.000</span></p>
+    </div>
+    <div class="gauge widget__gauge"><i data-spend-bar></i></div>
+    <p class="widget__foot" data-spend-left-short>Sobram R$ 1.335</p>
+  </div>
+</template>
+
+<template id="tpl-w-today">
+  <div class="widget widget--s">
+    <span class="widget__glow"></span>
+    <div class="widget__head"><span><svg viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg><span data-i18n="w.today">Hoje</span></span></div>
+    <span class="widget__val" data-spend-today>R$ 18,40</span>
+    <div class="widget__last" data-spend-last></div>
+    <p class="widget__foot"><span data-i18n="w.avg">Média do mês</span> <b data-spend-avg>R$ 97,92</b><span data-i18n="w.perday">/dia</span></p>
+  </div>
+</template>
+
+<template id="tpl-w-cats">
+  <div class="widget widget--m">
+    <span class="widget__glow"></span>
+    <div class="widget__head"><span><svg viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg><span data-i18n="w.cats">Por categoria</span></span></div>
+    <span class="widget__chip"><svg class="ic" aria-hidden="true"><use href="#i-plus-circle"/></svg><span data-i18n="w.add">Novo gasto</span></span>
+    <ul class="cats">
+      <li data-cat="groc"><span class="cname" data-i18n="cat.groc">Mercado</span><span class="bar"><i></i></span><b data-cat-amt>R$ 612,40</b></li>
+      <li data-cat="dine" data-up><span class="cname" data-i18n="cat.dine">Restaurantes</span><span class="bar"><i></i></span><b data-cat-amt>R$ 418,70</b></li>
+      <li data-cat="trans"><span class="cname" data-i18n="cat.trans">Transporte</span><span class="bar"><i></i></span><b data-cat-amt>R$ 204,10</b></li>
+      <li data-cat="leis"><span class="cname" data-i18n="cat.leis">Lazer</span><span class="bar"><i></i></span><b data-cat-amt>R$ 187,00</b></li>
+    </ul>
+  </div>
+</template>
 
 <!-- shown inside every .wl after a successful signup -->
 <template id="tpl-wl-done">
