@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python / tooling
+__pycache__/
+*.py[cod]
+.venv/
+
+# Local env / logs
+.env
+.env.*
+*.log
