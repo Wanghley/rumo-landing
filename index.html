@@ -97,8 +97,190 @@
 <main id="main">
 
 
+<!-- ================= PROMO DEMO SLOT ================= -->
+<section class="demo" id="demo" aria-labelledby="demo-h">
+  <div class="wrap">
+    <div class="demo__head reveal">
+      <h2 id="demo-h" data-i18n="demo.h">Veja o rumo em 60 segundos.</h2>
+      <p class="lede" data-i18n="demo.p">Seus gastos, a análise da IA e o widget em uma volta rápida. Sem cadastro.</p>
+    </div>
+
+    <div class="stage reveal" data-demo>
+      <span class="farol" aria-hidden="true"></span>
+      <div class="stage__poster">
+        <svg class="stage__mark" viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg>
+        <p class="stage__soon" data-i18n="demo.soon">Vídeo de demonstração em breve</p>
+        <a class="btn btn--primary stage__slot" href="#entrar" data-cta="demo"><span data-i18n="cta.join">Entrar na lista</span></a>
+        <button class="stage__play" type="button" data-demo-play data-i18n-aria="demo.play" aria-label="Assistir à demonstração">
+          <svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
+        </button>
+      </div>
+      <ol class="stage__chapters" aria-hidden="true">
+        <li><span>0:00</span><b data-i18n="demo.c1">Gastos</b></li>
+        <li><span>0:15</span><b data-i18n="demo.c2">Análise com IA</b></li>
+        <li><span>0:30</span><b data-i18n="demo.c3">Widget</b></li>
+        <li><span>0:45</span><b data-i18n="demo.c4">Pergunte ao rumo</b></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS: pinned phone, three chapters ================= -->
+<section class="chapters" id="app" aria-labelledby="app-h">
+  <div class="wrap">
+    <div class="chapters__head reveal">
+      <h2 id="app-h" data-i18n="app.h">Do gasto à resposta, sem esforço.</h2>
+    </div>
+    <div class="chapters__grid" data-chapters>
+      <div class="chapters__sticky">
+        <span class="farol" aria-hidden="true"></span>
+        <div data-mount="phone" data-screens="1,2,3" data-master></div>
+        <p class="fine" data-i18n="app.caption">Telas com dados de exemplo.</p>
+      </div>
+
+      <div class="chapters__steps">
+        <article class="step" data-step="1">
+          <h3 data-i18n="st1.h">Seus gastos, organizados sozinhos.</h3>
+          <p data-i18n="st1.p">Pagou com o cartão do Apple Wallet? O gasto entra no rumo já com categoria. Você só confere.</p>
+          <span class="pill"><svg class="ic" aria-hidden="true"><use href="#i-chart-pie-slice"/></svg><span data-i18n="st1.pill">Gastos</span></span>
+          <div class="step__phone" data-mount="phone" data-screens="1"></div>
+        </article>
+        <article class="step" data-step="2">
+          <h3 data-i18n="st2.h">A IA mostra o que mudou.</h3>
+          <p data-i18n="st2.p">Delivery subiu, assinatura duplicada, orçamento no ritmo. Cada aviso vem com o valor e um próximo passo, sem drama.</p>
+          <span class="pill"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-i18n="st2.pill">Análise do rumo</span></span>
+          <div class="step__phone" data-mount="phone" data-screens="2"></div>
+        </article>
+        <article class="step" data-step="3">
+          <h3 data-i18n="st3.h">Pergunte. Ela responde com os seus números.</h3>
+          <p data-i18n="st3.p">Posso pedir delivery hoje? Quanto gastei com mercado? O rumo responde a partir dos seus próprios gastos, sem chute.</p>
+          <span class="pill"><svg class="ic" aria-hidden="true"><use href="#i-chat-teardrop-text"/></svg><span data-i18n="st3.pill">Pergunte ao rumo</span></span>
+          <div class="step__phone" data-mount="phone" data-screens="3"></div>
+        </article>
+        <div class="chapters__cta reveal">
+          <p data-i18n="app.ctaP">Quer ver isso com os seus gastos?</p>
+          <a class="btn btn--primary btn--lg" href="#lista" data-cta="chapters" data-focus="#wl-email-final"><span data-i18n="cta.join">Entrar na lista</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WIDGET (the star) ================= -->
+<section class="wid" id="widget" aria-labelledby="wid-h">
+  <div class="wrap wid__grid">
+    <div class="wid__copy">
+      <h2 id="wid-h" class="reveal" data-i18n="wid.h">Seu orçamento na tela de início.</h2>
+      <p class="lede reveal" data-i18n="wid.p">Veja quanto sobra sem abrir o app. Quando um gasto entra, o widget atualiza sozinho.</p>
+      <ul class="benefits">
+        <li class="reveal"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><div><b data-i18n="wid.b1t">Quanto sobra</b><span data-i18n="wid.b1p">O orçamento do mês e a média por dia, sempre à vista.</span></div></li>
+        <li class="reveal" style="--d:90ms"><svg class="ic" aria-hidden="true"><use href="#i-chart-pie-slice"/></svg><div><b data-i18n="wid.b2t">Para onde vai</b><span data-i18n="wid.b2p">Gastos por categoria, atualizados a cada compra.</span></div></li>
+        <li class="reveal" style="--d:180ms"><svg class="ic" aria-hidden="true"><use href="#i-plus-circle"/></svg><div><b data-i18n="wid.b3t">Um toque</b><span data-i18n="wid.b3p">Registre um gasto direto do widget.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="wstage reveal" data-live>
+      <span class="farol" aria-hidden="true"></span>
+      <div class="banner" data-banner aria-hidden="true">
+        <div class="banner__in">
+          <span class="banner__icon"><img src="assets/brand/rumo-app-icon.svg" alt="" width="40" height="40"></span>
+          <div class="banner__top"><b>rumo</b><span data-i18n="banner.now">agora</span></div>
+          <p class="banner__t" data-banner-t>Mercado Dom Pedro: R$ 42,18</p>
+          <p class="banner__b"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-banner-b>Categorizado como Mercado.</span></p>
+        </div>
+      </div>
+      <div class="wgrid" aria-hidden="true">
+        <div data-mount="widget-month"></div>
+        <div data-mount="widget-today"></div>
+        <div data-mount="widget-cats"></div>
+      </div>
+      <p class="fine caption" data-i18n="wid.caption">Widgets com dados de exemplo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE PROMISE ================= -->
+<section class="promise on-moss" aria-labelledby="prom-h">
+  <span class="farol" aria-hidden="true"></span>
+  <div class="wrap promise__inner">
+    <h2 id="prom-h" class="reveal" data-i18n="prom.h">O rumo nunca guarda, move ou converte o seu dinheiro.</h2>
+    <p class="promise__p reveal" data-i18n="prom.p">Somos software, não banco. Não pedimos a senha do seu banco e nunca vendemos seus dados.</p>
+    <ul class="promise__list">
+      <li class="reveal"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg><b data-i18n="prom.1t">Sem senha do banco</b><p data-i18n="prom.1p">Os gastos vêm do Apple Wallet e dos extratos que você escolhe importar.</p></li>
+      <li class="reveal" style="--d:90ms"><svg class="ic" aria-hidden="true"><use href="#i-lock-key"/></svg><b data-i18n="prom.2t">Extratos criptografados</b><p data-i18n="prom.2p">Os arquivos que você importa ficam protegidos com criptografia.</p></li>
+      <li class="reveal" style="--d:180ms"><svg class="ic" aria-hidden="true"><use href="#i-trash-simple"/></svg><b data-i18n="prom.3t">Apague tudo quando quiser</b><p data-i18n="prom.3p">Peça a exclusão da conta e dos dados, e a gente cumpre, como manda a LGPD.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="perguntas" aria-labelledby="faq-h">
+  <div class="wrap faq__grid">
+    <h2 id="faq-h" data-i18n="faq.h">Perguntas que a gente ouve.</h2>
+    <div>
+      <details><summary><span data-i18n="faq.q1">Preciso conectar meu banco?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p data-i18n="faq.a1">Não. Gastos pagos com o Apple Wallet entram sozinhos, e você também pode importar extratos (PDF, CSV ou OFX) ou registrar um gasto com um toque. O rumo não pede a senha do seu banco.</p></details>
+      <details><summary><span data-i18n="faq.q2">O rumo mexe no meu dinheiro?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p data-i18n="faq.a2">Nunca. O rumo não guarda, não move e não converte dinheiro. Ele só analisa e orienta, e quem decide é você.</p></details>
+      <details><summary><span data-i18n="faq.q3">Quanto custa?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p data-i18n="faq.a3">Começar é grátis. Um plano Pro, com a análise completa e as perguntas à IA, vem depois, e quem está na lista fica sabendo antes.</p></details>
+      <details><summary><span data-i18n="faq.q4">Funciona só no iPhone?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p data-i18n="faq.a4">O app para iPhone vem primeiro, com widgets. Na lista você pode dizer que usa Android, e isso ajuda a gente a priorizar.</p></details>
+      <details><summary><span data-i18n="faq.q5">E os investimentos?</span><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p data-i18n="faq.a5">Vêm em uma próxima fase. Primeiro o rumo cuida dos seus gastos, que é onde o dinheiro escapa.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final" id="lista" aria-labelledby="final-h">
+  <span class="farol" aria-hidden="true"></span>
+  <svg class="final__mark" viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg>
+  <div class="wrap">
+    <div class="final__inner">
+      <h2 id="final-h" class="reveal" data-i18n="final.h">Entre na lista e conheça o seu CFO.</h2>
+      <p class="lede reveal" data-i18n="final.p">Receba o convite assim que o app abrir.</p>
+      <div class="wl reveal" data-wl="final">
+        <form class="wl__form" novalidate>
+          <div class="wl__row">
+            <div class="field">
+              <label for="wl-email-final" data-i18n="wl.label">Seu e-mail</label>
+              <input id="wl-email-final" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="nome@exemplo.com" data-i18n-ph="wl.ph">
+            </div>
+            <button class="btn btn--primary btn--lg" type="submit">
+              <span data-i18n="cta.join">Entrar na lista</span>
+              <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </button>
+          </div>
+          <p class="wl__err" role="alert" hidden></p>
+          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para avisar do lançamento. Sem spam, e você sai quando quiser.</p>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contato" aria-labelledby="ct-h">
+  <div class="wrap contact__grid">
+    <div class="contact__copy">
+      <h2 id="ct-h" data-i18n="ct.h">Fale com a gente.</h2>
+      <p class="lede" data-i18n="ct.p">Dúvida, ideia, parceria ou imprensa? Escreva e a gente responde.</p>
+      <p class="fine" data-i18n="ct.lang">Respondemos em português e em inglês.</p>
+      <a class="mail" data-mail href="#" hidden><svg class="ic" aria-hidden="true"><use href="#i-envelope-simple"/></svg><span></span></a>
+    </div>
+    <form class="cform" data-contact novalidate>
+      <div class="cform__row">
+        <div class="field"><label for="ct-name" data-i18n="ct.name">Nome</label><input id="ct-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="ct-email" data-i18n="ct.email">E-mail</label><input id="ct-email" name="email" type="email" inputmode="email" autocomplete="email" required></div>
+      </div>
+      <div class="field"><label for="ct-msg" data-i18n="ct.msg">Mensagem</label><textarea id="ct-msg" name="message" required></textarea></div>
+      <p class="wl__err" role="alert" hidden></p>
+      <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><button class="btn btn--primary btn--lg" type="submit"><span data-i18n="ct.send">Enviar mensagem</span><svg class="ic" aria-hidden="true"><use href="#i-paper-plane-tilt"/></svg></button></div>
+    </form>
+  </div>
+</section>
+
 </main>
 
+<!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer__top">
@@ -117,6 +299,58 @@
   </div>
 </footer>
 
+
+<!-- shown inside every .wl after a successful signup -->
+<template id="tpl-wl-done">
+  <div class="wl__done" role="status">
+    <div class="done__head">
+      <span class="done__check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+      <div>
+        <p class="done__title" data-i18n="done.t">Você está na lista.</p>
+        <p class="done__sub"><span data-i18n="done.s1">Vamos avisar em</span> <b data-wl-email></b> <span data-i18n="done.s2">assim que o app abrir.</span></p>
+      </div>
+    </div>
+    <details class="done__more">
+      <summary><span data-i18n="done.more">Ajude a gente a priorizar (30 segundos, opcional)</span><svg class="ic" aria-hidden="true"><use href="#i-caret-down"/></svg></summary>
+      <form class="prof" data-profile novalidate>
+        <fieldset>
+          <legend data-i18n="done.q1">Onde você mora?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="country" value="BR"><span data-i18n="v.br">Brasil</span></label>
+            <label class="chip"><input type="radio" name="country" value="US"><span data-i18n="v.us">Estados Unidos</span></label>
+            <label class="chip"><input type="radio" name="country" value="other"><span data-i18n="v.other">Outro país</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="done.q2">O que mais pesa hoje?</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="concern" value="where"><span data-i18n="k.where">Não sei para onde vai meu dinheiro</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="subs"><span data-i18n="k.subs">Assinaturas esquecidas</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="over"><span data-i18n="k.over">Estourar o orçamento</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="save"><span data-i18n="k.save">Juntar mais dinheiro</span></label>
+            <label class="chip"><input type="checkbox" name="concern" value="org"><span data-i18n="k.org">Organizar contas e cartões</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="done.q3">Qual celular você usa?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="device" value="iphone"><span>iPhone</span></label>
+            <label class="chip"><input type="radio" name="device" value="android"><span>Android</span></label>
+          </div>
+        </fieldset>
+        <div><button class="btn btn--primary" type="submit"><span data-i18n="done.save">Salvar respostas</span></button></div>
+      </form>
+      <p class="done__thanks" data-thanks hidden data-i18n="done.thanks">Obrigado. Isso ajuda a gente a priorizar o que construir primeiro.</p>
+    </details>
+    <div class="done__share">
+      <p data-i18n="done.share">Conhece alguém que também não sabe para onde vai o dinheiro?</p>
+      <div class="row">
+        <a class="btn btn--wa btn--sm" data-share="wa" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-whatsapp-logo"/></svg><span data-i18n="done.wa">Enviar no WhatsApp</span></a>
+        <button class="btn btn--ghost btn--sm" type="button" data-share="copy"><svg class="ic" aria-hidden="true"><use href="#i-link-simple"/></svg><span data-i18n="done.copy">Copiar link</span></button>
+      </div>
+    </div>
+  </div>
+</template>
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/app.js" defer></script>
