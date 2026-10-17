@@ -459,4 +459,183 @@
     }
   }
 
+  /* ------------------------------------------------------------------ leads */
+  const UTM = (() => {
+    const p = new URLSearchParams(location.search), o = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => { if (p.get(k)) o[k] = p.get(k); });
+    try { if (Object.keys(o).length) sessionStorage.setItem('rumo_utm', JSON.stringify(o)); else return JSON.parse(sessionStorage.getItem('rumo_utm') || '{}'); } catch (_) { /* ignore */ }
+    return o;
+  })();
+  const REF = new URLSearchParams(location.search).get('ref') || '';
+  const MY_REF = store.get('rumo_ref') || (() => { const c = Math.random().toString(36).slice(2, 8); store.set('rumo_ref', c); return c; })();
+  const baseUrl = () => CFG.SITE_URL || location.href.split(/[?#]/)[0];
+
+  async function send(payload) {
+    const body = JSON.stringify(Object.assign({ ts: new Date().toISOString(), lang, page: baseUrl(), referrer: document.referrer || '', utm: UTM, ref: REF, myRef: MY_REF }, payload));
+    if (!CFG.WAITLIST_ENDPOINT) { // demo mode: nothing leaves the browser
+      try { const k = 'rumo_demo_leads'; const all = JSON.parse(store.get(k) || '[]'); all.push(JSON.parse(body)); store.set(k, JSON.stringify(all)); } catch (_) { /* ignore */ }
+      console.info('[rumo demo mode] set WAITLIST_ENDPOINT in assets/js/config.js to collect leads', JSON.parse(body));
+      await new Promise((r) => setTimeout(r, 450));
+      return true;
+    }
+    const init = { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body, keepalive: true };
+    try { const res = await fetch(CFG.WAITLIST_ENDPOINT, init); return res.ok; }
+    catch (err) { // opaque cross-origin hosts (e.g. Apps Script redirects): send blind, assume delivery
+      try { await fetch(CFG.WAITLIST_ENDPOINT, Object.assign({}, init, { mode: 'no-cors' })); return true; } catch (_) { return false; }
+    }
+  }
+  const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+  function showError(form, key, input) {
+    const box = $('.wl__err', form);
+    box.textContent = t(key); box.hidden = false;
+    if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
+  }
+  function clearError(form) { const b = $('.wl__err', form); if (b) b.hidden = true; $$('[aria-invalid]', form).forEach((i) => i.removeAttribute('aria-invalid')); }
+
+  function showDone(wl, email) {
+    const form = $('.wl__form', wl); if (form) form.hidden = true;
+    let done = $('.wl__done', wl);
+    if (!done) {
+      wl.appendChild(tpl('tpl-wl-done'));
+      done = $('.wl__done', wl);
+      capturePT(done); applyLang(lang, { silent: true });
+      $$('[data-wl-email]', done).forEach((n) => { n.textContent = email; });
+      const url = `${baseUrl()}?ref=${MY_REF}${lang === 'en' ? '&lang=en' : ''}`;
+      const wa = $('[data-share="wa"]', done);
+      wa.href = `https://wa.me/?text=${encodeURIComponent(`${t('share.text')} ${url}`)}`;
+      wa.addEventListener('click', () => track('share_whatsapp'));
+      const copy = $('[data-share="copy"]', done);
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(url); } catch (_) { return; }
+        const label = $('span', copy); const old = label.textContent; label.textContent = t('done.copied');
+        track('share_copy'); setTimeout(() => { label.textContent = old; }, 1800);
+      });
+      $('[data-profile]', done).addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const f = e.currentTarget; const fd = new FormData(f);
+        const profile = { type: 'waitlist_profile', email, country: fd.get('country') || '', concerns: fd.getAll('concern'), device: fd.get('device') || '' };
+        const btn = $('button[type="submit"]', f); btn.disabled = true;
+        const ok = await send(profile);
+        btn.disabled = false;
+        if (ok) { f.hidden = true; $('[data-thanks]', done).hidden = false; track('wl_profile', { country: profile.country, device: profile.device }); }
+      });
+    }
+  }
+
+  function initWaitlist() {
+    const saved = store.get('rumo_wl_email');
+    $$('[data-wl]').forEach((wl) => {
+      const form = $('.wl__form', wl); if (!form) return;
+      const input = $('input[name="email"]', form), btn = $('button[type="submit"]', form), label = $('span', btn);
+      let focused = false;
+      input.addEventListener('focus', () => { if (!focused) { focused = true; track('wl_focus', { where: wl.dataset.wl }); } });
+      input.addEventListener('input', () => clearError(form));
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); clearError(form);
+        const email = input.value.trim();
+        if (!validEmail(email)) { showError(form, 'err.email', input); track('wl_invalid'); return; }
+        if (form.elements.company && form.elements.company.value) { showDone(wl, email); return; } // honeypot: pretend success
+        btn.disabled = true; const old = label.textContent; label.textContent = t('wl.sending');
+        track('wl_submit', { where: wl.dataset.wl });
+        const ok = await send({ type: 'waitlist', email });
+        btn.disabled = false; label.textContent = old;
+        if (!ok) { showError(form, 'err.net'); track('wl_error'); return; }
+        store.set('rumo_wl_email', email);
+        $$('[data-wl]').forEach((w) => showDone(w, email));
+        track('wl_success', { where: wl.dataset.wl });
+      });
+      if (saved) showDone(wl, saved);
+    });
+
+    // every "join" CTA lands on a form and focuses the field
+    $$('a[data-cta]').forEach((a) => a.addEventListener('click', () => {
+      track('cta_click', { where: a.dataset.cta });
+      const target = a.dataset.focus ? $(a.dataset.focus) : $('#wl-email-hero');
+      if (target && !target.closest('[hidden]')) setTimeout(() => target.focus({ preventScroll: true }), 650);
+    }));
+  }
+
+  function initContact() {
+    const form = $('[data-contact]'); if (!form) return;
+    const mail = $('[data-mail]');
+    if (CFG.CONTACT_EMAIL && mail) { mail.href = `mailto:${CFG.CONTACT_EMAIL}`; $('span', mail).textContent = CFG.CONTACT_EMAIL; mail.hidden = false; }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); clearError(form);
+      const fd = new FormData(form);
+      const name = String(fd.get('name') || '').trim(), email = String(fd.get('email') || '').trim(), message = String(fd.get('message') || '').trim();
+      if (!name || !message) { showError(form, 'err.req', form.elements.name.value ? form.elements.message : form.elements.name); return; }
+      if (!validEmail(email)) { showError(form, 'err.email', form.elements.email); return; }
+      if (fd.get('company')) return;
+      const btn = $('button[type="submit"]', form), label = $('span', btn); const old = label.textContent;
+      btn.disabled = true; label.textContent = t('ct.sending');
+      const ok = await send({ type: 'contact', name, email, message });
+      btn.disabled = false; label.textContent = old;
+      if (!ok) { showError(form, 'err.net'); return; }
+      track('contact_submit');
+      const okBox = document.createElement('p'); okBox.className = 'cform__ok'; okBox.setAttribute('role', 'status');
+      okBox.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span></span>';
+      $('span', okBox).textContent = t('ct.ok');
+      form.replaceChildren(okBox);
+    });
+  }
+
+  /* ------------------------------------------------------------------ promo video slot */
+  function initDemo() {
+    const stage = $('[data-demo]'), v = CFG.DEMO_VIDEO || {};
+    if (!stage || !v.provider || !v.src) return;
+    stage.classList.add('has-video');
+    $('[data-demo-play]').addEventListener('click', () => {
+      let el;
+      if (v.provider === 'mp4') {
+        el = document.createElement('video'); Object.assign(el, { src: v.src, controls: true, autoplay: true, playsInline: true, poster: v.poster || '' });
+      } else {
+        el = document.createElement('iframe');
+        el.src = v.provider === 'vimeo' ? `https://player.vimeo.com/video/${encodeURIComponent(v.src)}?autoplay=1` : `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.src)}?autoplay=1&rel=0`;
+        el.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; el.allowFullscreen = true; el.title = t('demo.h');
+      }
+      el.className = 'stage__frame'; stage.appendChild(el); track('demo_play');
+    });
+  }
+
+  /* ------------------------------------------------------------------ download mode (when the app is live) */
+  function initDownloadMode() {
+    if (!CFG.APP_STORE_URL) return;
+    $$('a[data-cta]').forEach((a) => {
+      a.href = CFG.APP_STORE_URL; a.target = '_blank'; a.rel = 'noopener';
+      const s = $('[data-i18n]', a); if (s) s.dataset.i18n = 'cta.download';
+    });
+    const hero = $('[data-wl="hero"]');
+    if (hero) {
+      hero.replaceChildren();
+      const a = document.createElement('a'); a.className = 'btn btn--primary btn--lg'; a.href = CFG.APP_STORE_URL; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-apple-logo"/></svg><span data-i18n="cta.download"></span>';
+      hero.appendChild(a);
+    }
+  }
+
+  /* ------------------------------------------------------------------ init */
+  function init() {
+    mountAll();
+    capturePT(document);
+    initDownloadMode();
+
+    const q = new URLSearchParams(location.search).get('lang');
+    const start = q === 'en' || q === 'pt' ? q : store.get('rumo_lang') === 'en' ? 'en' : 'pt';
+    applyLang(start, { silent: true });
+
+    document.addEventListener('click', (e) => {
+      const lb = e.target.closest('[data-lang]'); if (lb) applyLang(lb.dataset.lang);
+    });
+
+    initObservers();
+    initWaitlist();
+    initContact();
+    initDemo();
+
+    clearTimeout(window.__rumoFailsafe);
+    track('lp_view');
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
