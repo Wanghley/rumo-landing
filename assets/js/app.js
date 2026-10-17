@@ -193,4 +193,270 @@
   }
   function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
+  /* ------------------------------------------------------------------ the spending engine (synthetic demo data) */
+  const BUDGET = 3000, DAY = 17, DAYS = 31;
+  const r2 = (v) => Math.round(v * 100) / 100;
+  const ICON = { groc: 'i-shopping-cart-simple', dine: 'i-fork-knife', trans: 'i-car-simple', leis: 'i-ticket', oth: 'i-receipt' };
+  const BASE = {
+    cats: { groc: 612.4, dine: 418.7, trans: 204.1, leis: 187, oth: 242.4 }, // sums to 1,664.60
+    today: 18.4,
+    feed: [
+      { cat: 'dine', name: 'Padaria Pão Quente', amt: 18.4, when: 'today', via: 'pay' },
+      { cat: 'oth', name: 'Spotify', amt: 21.9, when: 'yday', via: 'card' },
+      { cat: 'groc', name: 'Mercado Dom Pedro', amt: 86.3, when: 'yday', via: 'pay' },
+      { cat: 'oth', name: 'Farmácia Vida', amt: 54.6, when: 'yday', via: 'pay' },
+    ],
+  };
+  const EVENTS = [
+    { cat: 'groc', name: 'Mercado Dom Pedro', amt: 42.18, via: 'pay' },
+    { cat: 'dine', name: 'Café Girassol', amt: 12.5, via: 'pay' },
+    { cat: 'trans', name: 'Uber', amt: 23.9, via: 'card' },
+  ];
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  let S = clone(BASE);
+  const total = () => r2(Object.values(S.cats).reduce((a, b) => a + b, 0));
+
+  const armed = new WeakSet();
+  const instances = () => $$('.phone, .widget').filter((i) => armed.has(i));
+
+  function txNode(it, isNew) {
+    const d = document.createElement('div');
+    d.className = 'tx' + (isNew ? ' is-new' : '');
+    d.innerHTML =
+      `<span class="tx__ic"><svg class="ic" aria-hidden="true"><use href="#${ICON[it.cat]}"/></svg></span>` +
+      `<div><b></b><small>${it.via === 'pay' ? '<svg class="ic" aria-hidden="true"><use href="#i-apple-logo"/></svg>' : ''}<span></span></small></div><span class="tx__amt"></span>`;
+    $('b', d).textContent = it.name;
+    $('small span', d).textContent = `${t('cat.' + it.cat)} · ${t('feed.' + it.when)}`;
+    $('.tx__amt', d).textContent = fmt(it.amt);
+    return d;
+  }
+
+  function renderInstance(inst, o) {
+    const tot = total(), left = BUDGET - tot, pace = (BUDGET * DAY) / DAYS;
+    const pct = Math.min(100, Math.round((tot / BUDGET) * 100));
+    const dailyLeft = Math.max(0, left / (DAYS - DAY));
+    $$('[data-spend-total]', inst).forEach((el) => {
+      const to = chars(tot, el.dataset.cents !== '0');
+      if (o.animate) rollTo(el, to); else setChars(el, to);
+    });
+    $$('[data-spend-today]', inst).forEach((el) => {
+      const to = chars(S.today, true);
+      if (o.animate) rollTo(el, to); else setChars(el, to);
+    });
+    $$('[data-spend-bar]', inst).forEach((el) => el.style.setProperty('--w', `${Math.min(100, (tot / BUDGET) * 100).toFixed(2)}%`));
+    $$('[data-spend-pct]', inst).forEach((el) => { el.textContent = `${pct}%`; });
+    $$('[data-spend-daily]', inst).forEach((el) => { el.textContent = fmt(dailyLeft, false); });
+    $$('[data-spend-left]', inst).forEach((el) => { el.textContent = t('spend.left').replace('{amt}', fmt(left, false)).replace('{days}', DAYS - DAY); });
+    $$('[data-spend-left-short]', inst).forEach((el) => { el.textContent = t('w.left').replace('{amt}', fmt(left, false)); });
+    $$('[data-spend-avg]', inst).forEach((el) => { el.textContent = fmt(tot / DAY, true); });
+    $$('[data-spend-chip]', inst).forEach((chip) => {
+      const state = tot / pace > 1.08 ? 'over' : 'ok';
+      chip.dataset.state = state;
+      const lab = $('[data-spend-chip-label]', chip); lab.dataset.i18n = state === 'over' ? 's1.over' : 's1.ok'; lab.textContent = t(lab.dataset.i18n);
+    });
+    const max = Math.max(...Object.values(S.cats));
+    $$('[data-cat]', inst).forEach((li) => {
+      const k = li.dataset.cat, amt = $('[data-cat-amt]', li), barI = $('.bar i', li);
+      if (barI) barI.style.setProperty('--w', `${((S.cats[k] / max) * 100).toFixed(2)}%`);
+      const next = fmt(S.cats[k]);
+      if (amt && amt.textContent !== next) { amt.textContent = next; if (o.animate && o.ev && o.ev.cat === k) bump(amt); }
+    });
+    $$('[data-feed]', inst).forEach((host) => {
+      host.replaceChildren(...S.feed.slice(0, 4).map((it, i) => txNode(it, i === 0 && !!o.ev)));
+    });
+    $$('[data-spend-last]', inst).forEach((host) => {
+      const it = S.feed[0];
+      host.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#${ICON[it.cat]}"/></svg><span><span></span><small></small></span>`;
+      $('span span', host).textContent = it.name; $('small', host).textContent = fmt(it.amt);
+      host.classList.remove('is-new'); if (o.ev) { void host.offsetWidth; host.classList.add('is-new'); }
+    });
+  }
+  const renderAll = (o) => instances().forEach((i) => renderInstance(i, o || {}));
+
+  /** unseen instances start at zero so the first reveal is a count-up, not a flash of the final value */
+  function prime(inst) {
+    $$('[data-spend-total]', inst).forEach((el) => setChars(el, chars(0, el.dataset.cents !== '0')));
+    $$('[data-spend-today]', inst).forEach((el) => setChars(el, chars(0, true)));
+  }
+  function arm(inst, delay) {
+    if (armed.has(inst)) return;
+    armed.add(inst);
+    if (!delay || reduceMotion.matches) renderInstance(inst, { animate: false });
+    else setTimeout(() => renderInstance(inst, { animate: true }), delay);
+  }
+
+  function pushEvent(ev) {
+    S.feed.forEach((f) => { if (f.when === 'now') f.when = 'today'; });
+    S.cats[ev.cat] = r2(S.cats[ev.cat] + ev.amt);
+    S.today = r2(S.today + ev.amt);
+    S.feed.unshift(Object.assign({ when: 'now' }, ev));
+    renderAll({ animate: true, ev });
+    notify(ev);
+  }
+  function resetSpend() {
+    S = clone(BASE);
+    renderAll({ animate: true });
+    $$('[data-ls-notif], [data-phone-toast]').forEach((n) => n.classList.remove('is-in'));
+    const callout = $('[data-hero-callout]');
+    if (callout) {
+      callout.classList.remove('is-ping');
+      const ct = $('[data-hero-callout-t]', callout), cb = $('[data-hero-callout-b]', callout);
+      if (ct) ct.textContent = t('hero.calloutT');
+      if (cb) cb.textContent = t('hero.calloutB');
+    }
+  }
+  function notify(ev) {
+    const title = `${ev.name}: ${fmt(ev.amt)}`;
+    const body = t('banner.b').replace('{cat}', t('cat.' + ev.cat));
+    $$('[data-banner]').forEach((b) => {
+      $('[data-banner-t]', b).textContent = title;
+      $('[data-banner-b]', b).textContent = body;
+      b.classList.add('is-in'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('is-in'), 2900);
+    });
+    $$('[data-ls-notif]').forEach((n) => {
+      $('[data-ls-notif-t]', n).textContent = title;
+      $('[data-ls-notif-b]', n).textContent = body;
+      n.classList.add('is-in'); clearTimeout(n._t); n._t = setTimeout(() => n.classList.remove('is-in'), 3100);
+    });
+    $$('[data-lsw]').forEach((w) => {
+      w.classList.add('is-updating'); clearTimeout(w._t); w._t = setTimeout(() => w.classList.remove('is-updating'), 1400);
+    });
+    $$('[data-phone-toast]').forEach((pt) => {
+      const phone = pt.closest('.phone');
+      if (!phone || phone.dataset.active !== '1') return;
+      $('[data-phone-toast-t]', pt).textContent = title;
+      $('[data-phone-toast-b]', pt).textContent = body;
+      pt.classList.add('is-in'); phone.classList.add('is-ping');
+      clearTimeout(pt._t);
+      pt._t = setTimeout(() => { pt.classList.remove('is-in'); phone.classList.remove('is-ping'); }, 2500);
+    });
+    const callout = $('[data-hero-callout]');
+    if (callout) {
+      const ct = $('[data-hero-callout-t]', callout), cb = $('[data-hero-callout-b]', callout);
+      if (ct) ct.textContent = title;
+      if (cb) cb.textContent = body;
+      callout.classList.remove('is-ping'); void callout.offsetWidth; callout.classList.add('is-ping');
+      clearTimeout(callout._t); callout._t = setTimeout(() => callout.classList.remove('is-ping'), 2200);
+    }
+  }
+
+  /* ------------------------------------------------------------------ apply language */
+  function renderAmts(root = document) {
+    $$('[data-amt]', root).forEach((el) => { el.textContent = fmt(parseFloat(el.dataset.amt), el.dataset.cents !== '0'); });
+  }
+  function applyLang(next, opts) {
+    lang = next === 'en' ? 'en' : 'pt';
+    document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
+    $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    $$('[data-i18n-ph]').forEach((el) => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
+    $$('[data-i18n-aria]').forEach((el) => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+    $$('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    document.title = t('meta.title');
+    const md = $('meta[name="description"]'); if (md) md.content = t('meta.desc');
+    const og = $('meta[property="og:title"]'); if (og) og.content = t('meta.title');
+    renderAmts();
+    $$('.phone, .widget').forEach((i) => { if (!armed.has(i)) prime(i); });
+    renderAll({});
+    if (!opts || !opts.silent) { store.set('rumo_lang', lang); track('lang_change', { to: lang }); }
+  }
+
+  /* ------------------------------------------------------------------ phones, screens and widgets from templates */
+  const tpl = (id) => document.getElementById(id).content.cloneNode(true);
+
+  function setActiveScreen(phone, n) {
+    let tab = 'today';
+    $$('.screen', phone).forEach((s) => {
+      const on = s.dataset.screen === String(n);
+      s.classList.toggle('is-on', on); s.inert = !on; s.setAttribute('aria-hidden', on ? 'false' : 'true');
+      if (on) tab = s.dataset.tab;
+    });
+    phone.dataset.tab = tab; phone.dataset.active = String(n);
+  }
+  function buildPhone(host) {
+    const list = host.dataset.screens.split(',');
+    const phone = tpl('tpl-phone').firstElementChild;
+    const screens = $('.screens', phone);
+    list.forEach((n) => screens.appendChild(tpl('tpl-s' + n).firstElementChild));
+    $$('.screen', phone).forEach((s) => { s.inert = true; s.setAttribute('aria-hidden', 'true'); });
+    if (host.hasAttribute('data-static')) phone.inert = true;
+    if (host.hasAttribute('data-master')) masterPhone = phone;
+    if (host.hasAttribute('data-hero-phone')) heroPhone = phone;
+    host.appendChild(phone);
+    // switch the first screen on after first paint so its bars and stagger animate in
+    requestAnimationFrame(() => requestAnimationFrame(() => setActiveScreen(phone, list[0])));
+  }
+  const WIDGETS = { 'widget-month': 'tpl-w-month', 'widget-today': 'tpl-w-today', 'widget-cats': 'tpl-w-cats' };
+  function mountAll() {
+    $$('[data-mount]').forEach((m) => {
+      const k = m.dataset.mount;
+      if (k === 'phone') buildPhone(m); else if (WIDGETS[k]) m.appendChild(tpl(WIDGETS[k]));
+    });
+  }
+
+  /* ------------------------------------------------------------------ scroll behaviors (IntersectionObserver only) */
+  function initObservers() {
+    const nav = $('[data-nav]');
+    const sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:8px;pointer-events:none';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(([e]) => nav.classList.toggle('is-stuck', !e.isIntersecting)).observe(sentinel);
+
+    const rv = $$('.reveal');
+    if (reduceMotion.matches) rv.forEach((el) => el.classList.add('in'));
+    else {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      rv.forEach((el) => io.observe(el));
+    }
+
+    // Hero instances render their baseline immediately so the Lock Screen widget is crisp from frame 1
+    const insts = $$('.phone, .widget');
+    insts.filter((i) => !i.closest('.hero__stage')).forEach(prime);
+    insts.filter((i) => i.closest('.hero__stage')).forEach((i) => arm(i, 0));
+
+    const ao = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const inst = e.target; ao.unobserve(inst);
+      const idx = $$('.widget', inst.closest('.wgrid') || document.body).indexOf(inst);
+      arm(inst, 160 + Math.max(0, idx) * 140);
+    }), { threshold: 0.25 });
+    insts.filter((i) => !i.closest('.hero__stage')).forEach((i) => ao.observe(i));
+
+    // Hero switcher buttons allow manual toggling between Lock Screen (0) and Dashboard (1)
+    $$('[data-hero-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetStep = btn.dataset.heroStep;
+        if (heroPhone && heroFlow.step === '0' && targetStep === '1' && !reduceMotion.matches) {
+          heroPhone.classList.add('is-unlocking');
+          setTimeout(() => heroFlow.enterStep('1', true), 260);
+        } else {
+          heroFlow.enterStep(targetStep, true);
+        }
+        track('hero_screen_switch', { step: targetStep });
+      });
+    });
+
+    // live stages (hero + widget section) run the expense loop only while visible
+    const lo = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) live.visible.add(e.target); else live.visible.delete(e.target);
+      liveWake();
+    }), { threshold: 0.25 });
+    $$('[data-live]').forEach((s) => lo.observe(s));
+    document.addEventListener('visibilitychange', liveWake);
+
+    // chapters: the pinned phone follows the story
+    const steps = $$('.chapters__steps .step');
+    if (steps.length && masterPhone) {
+      steps[0].classList.add('is-active');
+      const so = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        steps.forEach((s) => s.classList.toggle('is-active', s === e.target));
+        setActiveScreen(masterPhone, e.target.dataset.step);
+        track('chapter_seen', { step: e.target.dataset.step });
+      }), { rootMargin: '-42% 0px -42% 0px' });
+      steps.forEach((s) => so.observe(s));
+    }
+  }
+
 })();
