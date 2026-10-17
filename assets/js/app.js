@@ -340,6 +340,113 @@
     }
   }
 
+  /* ------------------------------------------------------------------ Hero Lock Screen -> Dashboard director & live loop */
+  const live = { visible: new Set(), timer: null, idx: 0 };
+  let heroPhone = null, masterPhone = null;
+
+  const heroFlow = {
+    active: false,
+    step: '0', // '0' = Lock Screen, '1' = Dashboard
+    phaseStart: 0,
+    phaseDur: 4600,
+    raf: null,
+    timers: [],
+    clearTimers() {
+      while (this.timers.length) clearTimeout(this.timers.pop());
+      if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; }
+      if (heroPhone) heroPhone.classList.remove('is-unlocking', 'is-ping');
+    },
+    setSwitcherUI(step, progress) {
+      $$('[data-hero-step]').forEach((btn) => {
+        const on = btn.dataset.heroStep === String(step);
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        const bar = $('.hero__sw-bar', btn);
+        if (bar) bar.style.setProperty('--sw-p', on ? Math.min(1, Math.max(0, progress)).toFixed(3) : '0');
+      });
+    },
+    nextEvent() {
+      if (live.idx < EVENTS.length) {
+        pushEvent(EVENTS[live.idx++]);
+      } else {
+        live.idx = 0;
+        resetSpend();
+        this.timers.push(setTimeout(() => {
+          if (this.active && !document.hidden) pushEvent(EVENTS[live.idx++]);
+        }, 650));
+      }
+    },
+    enterStep(step, manual) {
+      if (!heroPhone) return;
+      this.clearTimers();
+      this.step = String(step);
+      this.phaseDur = this.step === '0' ? (manual ? 6000 : 4800) : (manual ? 6400 : 5200);
+      this.phaseStart = performance.now();
+      setActiveScreen(heroPhone, this.step);
+      this.setSwitcherUI(this.step, 0);
+
+      if (!this.active || reduceMotion.matches || document.hidden) return;
+
+      if (this.step === '0') {
+        // On Lock Screen: drop an Apple Pay expense after 1.35s, then tap & unlock into Dashboard
+        this.timers.push(setTimeout(() => {
+          if (this.active && this.step === '0') this.nextEvent();
+        }, 1350));
+        this.timers.push(setTimeout(() => {
+          if (this.active && this.step === '0' && heroPhone) heroPhone.classList.add('is-unlocking');
+        }, this.phaseDur - 680));
+        this.timers.push(setTimeout(() => {
+          if (this.active && this.step === '0') this.enterStep('1', false);
+        }, this.phaseDur));
+      } else {
+        // On Dashboard: show a live transaction arriving on the dashboard, then cycle back to Lock Screen
+        this.timers.push(setTimeout(() => {
+          if (this.active && this.step === '1') this.nextEvent();
+        }, 1750));
+        this.timers.push(setTimeout(() => {
+          if (this.active && this.step === '1') this.enterStep('0', false);
+        }, this.phaseDur));
+      }
+
+      const tickProgress = (now) => {
+        if (!this.active || document.hidden) return;
+        const p = Math.min(1, (now - this.phaseStart) / this.phaseDur);
+        this.setSwitcherUI(this.step, p);
+        if (p < 1) this.raf = requestAnimationFrame(tickProgress);
+      };
+      this.raf = requestAnimationFrame(tickProgress);
+    },
+    sync() {
+      const heroStage = $('[data-hero-stage]');
+      const shouldRun = heroStage && live.visible.has(heroStage) && !reduceMotion.matches && !document.hidden;
+      if (shouldRun && !this.active) {
+        this.active = true;
+        this.enterStep(this.step, false);
+      } else if (!shouldRun && this.active) {
+        this.active = false;
+        this.clearTimers();
+        this.setSwitcherUI(this.step, 0);
+      }
+    }
+  };
+
+  function liveSchedule(ms) { clearTimeout(live.timer); live.timer = setTimeout(liveTick, ms); }
+  function liveTick() {
+    live.timer = null;
+    if (!live.visible.size || document.hidden || heroFlow.active) return;
+    if (live.idx < EVENTS.length) { pushEvent(EVENTS[live.idx++]); liveSchedule(live.idx < EVENTS.length ? 3400 : 5600); }
+    else { live.idx = 0; resetSpend(); liveSchedule(2800); }
+  }
+  function liveWake() {
+    heroFlow.sync();
+    // If only the bottom widget section is visible (hero is scrolled off), keep the expense loop ticking there
+    if (!heroFlow.active && !live.timer && live.visible.size && !reduceMotion.matches && !document.hidden) {
+      liveSchedule(2200);
+    } else if (heroFlow.active && live.timer) {
+      clearTimeout(live.timer); live.timer = null;
+    }
+  }
+
   /* ------------------------------------------------------------------ apply language */
   function renderAmts(root = document) {
     $$('[data-amt]', root).forEach((el) => { el.textContent = fmt(parseFloat(el.dataset.amt), el.dataset.cents !== '0'); });
