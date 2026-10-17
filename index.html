@@ -98,6 +98,65 @@
 
 <main id="main">
 
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="farol farol--hero" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <div class="hero__copy">
+      <div class="hero__eyebrow">
+        <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+        <span data-i18n="hero.eyebrow">No iPhone · Da tela bloqueada ao painel em 1 toque</span>
+      </div>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hl"><span class="hl__in" data-i18n="hero.l1">Seu CFO</span></span>
+        <span class="hl"><span class="hl__in" data-i18n="hero.l2">pessoal,</span></span>
+        <span class="hl"><span class="hl__in"><span data-i18n="hero.l3a">com</span> <mark data-i18n="hero.l3b">IA.</mark></span></span>
+      </h1>
+      <p class="hero__sub" data-i18n="hero.sub">Veja para onde vai cada centavo. O rumo analisa seus gastos e mostra o que importa na tela de início.</p>
+
+      <div class="wl" id="entrar" data-wl="hero">
+        <form class="wl__form" novalidate>
+          <div class="wl__row">
+            <div class="field">
+              <label for="wl-email-hero" data-i18n="wl.label">Seu e-mail</label>
+              <input id="wl-email-hero" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="nome@exemplo.com" data-i18n-ph="wl.ph">
+            </div>
+            <button class="btn btn--primary btn--lg" type="submit">
+              <span data-i18n="cta.join">Entrar na lista</span>
+              <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </button>
+          </div>
+          <p class="wl__err" role="alert" hidden></p>
+          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para avisar do lançamento. Sem spam, e você sai quando quiser.</p>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </form>
+      </div>
+
+      <a class="link-play" href="#demo">
+        <svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
+        <span data-i18n="hero.demo">Ver o app em 60 segundos</span>
+      </a>
+    </div>
+
+    <div class="hero__stage" data-live data-hero-stage>
+      <div class="hero__scene" aria-hidden="true">
+        <div class="hero__phone" data-mount="phone" data-screens="0,1" data-hero-phone data-static></div>
+      </div>
+      <div class="hero__switcher" role="group" aria-label="Telas de demonstração" data-i18n-aria="hero.swAria" data-hero-nav>
+        <button type="button" class="hero__sw-btn is-active" data-hero-step="0" aria-pressed="true">
+          <svg class="ic" aria-hidden="true"><use href="#i-lock-simple"/></svg>
+          <span data-i18n="hero.swLock">Tela bloqueada + Widget</span>
+          <i class="hero__sw-bar" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="hero__sw-btn" data-hero-step="1" aria-pressed="false">
+          <svg class="ic" aria-hidden="true"><use href="#i-chart-pie-slice"/></svg>
+          <span data-i18n="hero.swDash">Painel do rumo</span>
+          <i class="hero__sw-bar" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= PROMO DEMO SLOT ================= -->
 <section class="demo" id="demo" aria-labelledby="demo-h">
