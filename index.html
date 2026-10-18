@@ -91,7 +91,7 @@
         <button type="button" data-lang="pt" aria-pressed="true">PT</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <a class="btn btn--primary btn--sm" href="#entrar" data-cta="nav"><span data-i18n="cta.join">Entrar na lista</span></a>
+      <a class="btn btn--primary btn--sm" href="#entrar" data-cta="nav"><span data-i18n="cta.join">Garantir acesso antecipado</span></a>
     </div>
   </div>
 </header>
@@ -116,25 +116,47 @@
 
       <div class="wl" id="entrar" data-wl="hero">
         <form class="wl__form" novalidate>
+          <div class="wl__perk">
+            <svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg>
+            <span data-i18n="wl.perk">Acesso fundador: 3 meses de rumo Pro grátis no lançamento</span>
+          </div>
           <div class="wl__row">
             <div class="field">
               <label for="wl-email-hero" data-i18n="wl.label">Seu e-mail</label>
               <input id="wl-email-hero" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="nome@exemplo.com" data-i18n-ph="wl.ph">
             </div>
             <button class="btn btn--primary btn--lg" type="submit">
-              <span data-i18n="cta.join">Entrar na lista</span>
+              <span data-i18n="cta.join">Garantir acesso antecipado</span>
               <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
             </button>
           </div>
           <p class="wl__err" role="alert" hidden></p>
-          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para avisar do lançamento. Sem spam, e você sai quando quiser.</p>
+          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para enviar seu convite. Sem spam, saia quando quiser.</p>
+          <ul class="wl__trust" aria-label="Garantias de privacidade">
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t1">Sem pedir senha do banco</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t2">Grátis para começar</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t3">100% privado (LGPD)</span></li>
+          </ul>
           <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
         </form>
       </div>
 
-      <a class="link-play" href="#demo">
+      <div class="hero__proof">
+        <div class="hero__avatars" aria-hidden="true">
+          <span class="av av--1">M</span>
+          <span class="av av--2">L</span>
+          <span class="av av--3">R</span>
+          <span class="av av--4">C</span>
+          <span class="av av--more">+1k</span>
+        </div>
+        <p class="hero__proof-txt">
+          <b data-i18n="hero.proofN">+1.420 pessoas</b> <span data-i18n="hero.proofT">já garantiram vaga na fila do iPhone</span>
+        </p>
+      </div>
+
+      <a class="link-play" href="#compare" data-hero-tour>
         <svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
-        <span data-i18n="hero.demo">Ver o app em 60 segundos</span>
+        <span data-i18n="hero.demo">Ver por que funciona em 60 segundos</span>
       </a>
     </div>
 
@@ -158,8 +180,8 @@
   </div>
 </section>
 
-<!-- ================= PROMO DEMO SLOT ================= -->
-<section class="demo" id="demo" aria-labelledby="demo-h">
+<!-- ================= PROMO DEMO SLOT (shown automatically when DEMO_VIDEO is configured) ================= -->
+<section class="demo" id="demo" aria-labelledby="demo-h" data-demo-sec hidden>
   <div class="wrap">
     <div class="demo__head reveal">
       <h2 id="demo-h" data-i18n="demo.h">Veja o rumo em 60 segundos.</h2>
@@ -171,7 +193,7 @@
       <div class="stage__poster">
         <svg class="stage__mark" viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg>
         <p class="stage__soon" data-i18n="demo.soon">Vídeo de demonstração em breve</p>
-        <a class="btn btn--primary stage__slot" href="#entrar" data-cta="demo"><span data-i18n="cta.join">Entrar na lista</span></a>
+        <a class="btn btn--primary stage__slot" href="#entrar" data-cta="demo"><span data-i18n="cta.join">Garantir acesso antecipado</span></a>
         <button class="stage__play" type="button" data-demo-play data-i18n-aria="demo.play" aria-label="Assistir à demonstração">
           <svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
         </button>
@@ -219,8 +241,8 @@
           <div class="step__phone" data-mount="phone" data-screens="3"></div>
         </article>
         <div class="chapters__cta reveal">
-          <p data-i18n="app.ctaP">Quer ver isso com os seus gastos?</p>
-          <a class="btn btn--primary btn--lg" href="#lista" data-cta="chapters" data-focus="#wl-email-final"><span data-i18n="cta.join">Entrar na lista</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <p data-i18n="app.ctaP">Quer fazer essas perguntas sobre os seus gastos?</p>
+          <a class="btn btn--primary btn--lg" href="#lista" data-cta="chapters" data-focus="#wl-email-final"><span data-i18n="cta.join">Garantir acesso antecipado</span><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </div>
     </div>
@@ -295,21 +317,30 @@
   <div class="wrap">
     <div class="final__inner">
       <h2 id="final-h" class="reveal" data-i18n="final.h">Entre na lista e conheça o seu CFO.</h2>
-      <p class="lede reveal" data-i18n="final.p">Receba o convite assim que o app abrir.</p>
+      <p class="lede reveal" data-i18n="final.p">Receba o convite assim que o app abrir e garanta 3 meses de rumo Pro grátis.</p>
       <div class="wl reveal" data-wl="final">
         <form class="wl__form" novalidate>
+          <div class="wl__perk">
+            <svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg>
+            <span data-i18n="wl.perk">Acesso fundador: 3 meses de rumo Pro grátis no lançamento</span>
+          </div>
           <div class="wl__row">
             <div class="field">
               <label for="wl-email-final" data-i18n="wl.label">Seu e-mail</label>
               <input id="wl-email-final" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="nome@exemplo.com" data-i18n-ph="wl.ph">
             </div>
             <button class="btn btn--primary btn--lg" type="submit">
-              <span data-i18n="cta.join">Entrar na lista</span>
+              <span data-i18n="cta.join">Garantir acesso antecipado</span>
               <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
             </button>
           </div>
           <p class="wl__err" role="alert" hidden></p>
-          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para avisar do lançamento. Sem spam, e você sai quando quiser.</p>
+          <p class="wl__help" data-i18n="wl.help">Só usamos seu e-mail para enviar seu convite. Sem spam, saia quando quiser.</p>
+          <ul class="wl__trust" aria-label="Garantias de privacidade">
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t1">Sem pedir senha do banco</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t2">Grátis para começar</span></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><span data-i18n="wl.t3">100% privado (LGPD)</span></li>
+          </ul>
           <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
         </form>
       </div>
@@ -547,14 +578,17 @@
 <template id="tpl-s3">
   <section class="screen" data-screen="3" data-tab="rumo">
     <div class="s-head"><div><p class="lbl" data-i18n="s3.title">Pergunte ao rumo</p><p class="muted" data-i18n="s3.sub">Respostas com os seus números</p></div></div>
-    <div class="chat">
-      <p class="bubble bubble--q st" style="--i:0" data-i18n="s3.q">Posso pedir delivery hoje sem estourar o orçamento?</p>
+    <div class="chat" data-s3-chat>
+      <p class="bubble bubble--q st" style="--i:0" data-chat-q data-i18n="s3.q">Posso pedir delivery hoje sem estourar o orçamento?</p>
       <div class="reply">
         <span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>
-        <p class="bubble bubble--a"><span data-i18n="s3.a">Pode. Sobram R$ 1.335 para 14 dias, cerca de R$ 95 por dia. Um pedido seu custa em média R$ 29,90.</span><small data-i18n="s3.src">Com base nos seus gastos de outubro.</small></p>
+        <p class="bubble bubble--a"><span data-chat-a data-i18n="s3.a">Pode. Sobram R$ 1.335 para 14 dias, cerca de R$ 95 por dia. Um pedido seu custa em média R$ 29,90.</span><small data-chat-src data-i18n="s3.src">Com base nos seus gastos de outubro.</small></p>
       </div>
     </div>
-    <div class="suggest st" style="--i:3"><span data-i18n="s3.s1">Quanto gastei com mercado?</span><span data-i18n="s3.s2">Onde posso economizar?</span></div>
+    <div class="suggest st" style="--i:3">
+      <button type="button" class="suggest__btn" data-ai-q="1" data-i18n="s3.s1">Quanto gastei com mercado?</button>
+      <button type="button" class="suggest__btn" data-ai-q="2" data-i18n="s3.s2">Onde posso economizar?</button>
+    </div>
     <div class="composer st" style="--i:4"><span data-i18n="s3.ph">Pergunte sobre seus gastos</span><svg class="ic" aria-hidden="true"><use href="#i-paper-plane-tilt"/></svg></div>
   </section>
 </template>
@@ -607,6 +641,10 @@
         <p class="done__sub"><span data-i18n="done.s1">Vamos avisar em</span> <b data-wl-email></b> <span data-i18n="done.s2">assim que o app abrir.</span></p>
       </div>
     </div>
+    <div class="done__vip">
+      <span class="done__pos"><span data-i18n="done.posLbl">Sua posição:</span> <b data-wl-pos>#1.429</b></span>
+      <span class="done__perk-tag"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-i18n="done.perk">3 meses de rumo Pro grátis reservados</span></span>
+    </div>
     <details class="done__more">
       <summary><span data-i18n="done.more">Ajude a gente a priorizar (30 segundos, opcional)</span><svg class="ic" aria-hidden="true"><use href="#i-caret-down"/></svg></summary>
       <form class="prof" data-profile novalidate>
@@ -640,9 +678,10 @@
       <p class="done__thanks" data-thanks hidden data-i18n="done.thanks">Obrigado. Isso ajuda a gente a priorizar o que construir primeiro.</p>
     </details>
     <div class="done__share">
-      <p data-i18n="done.share">Conhece alguém que também não sabe para onde vai o dinheiro?</p>
+      <p class="done__share-h" data-i18n="done.shareH">Quer furar a fila e receber o beta primeiro?</p>
+      <p data-i18n="done.share">Convide 1 amigo no WhatsApp para subir 500 posições na fila de acesso antecipado.</p>
       <div class="row">
-        <a class="btn btn--wa btn--sm" data-share="wa" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-whatsapp-logo"/></svg><span data-i18n="done.wa">Enviar no WhatsApp</span></a>
+        <a class="btn btn--wa btn--sm" data-share="wa" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-whatsapp-logo"/></svg><span data-i18n="done.wa">Enviar no WhatsApp (+500 posições)</span></a>
         <button class="btn btn--ghost btn--sm" type="button" data-share="copy"><svg class="ic" aria-hidden="true"><use href="#i-link-simple"/></svg><span data-i18n="done.copy">Copiar link</span></button>
       </div>
     </div>
