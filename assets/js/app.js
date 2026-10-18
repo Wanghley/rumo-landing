@@ -33,7 +33,7 @@
   const EN = {
     skip: 'Skip to content',
     'nav.app': 'How it works', 'nav.widget': 'Widget', 'nav.contact': 'Contact',
-    'cta.join': 'Join the waitlist', 'cta.download': 'Download for iPhone',
+    'cta.join': 'Get early access', 'cta.download': 'Download for iPhone',
     'hero.eyebrow': 'On iPhone · From Lock Screen to dashboard in 1 tap',
     'hero.l1': 'Your', 'hero.l2': 'personal', 'hero.l3a': '', 'hero.l3b': 'AI CFO.',
     'hero.sub': 'See where every cent goes. rumo analyzes your spending and shows what matters on your Home Screen.',
@@ -42,15 +42,31 @@
     'hero.swAria': 'Demo screens',
     'hero.swLock': 'Lock Screen + Widget',
     'hero.swDash': 'rumo Dashboard',
+    'wl.perk': 'Founding access: 3 months of rumo Pro free at launch',
     'wl.label': 'Your email', 'wl.ph': 'name@example.com',
-    'wl.help': 'We only use your email to tell you when the app opens. No spam, and you can leave anytime.',
-    'hero.demo': 'See the app in 60 seconds',
+    'wl.help': 'We only use your email to send your invite. No spam, leave anytime.',
+    'wl.t1': 'No bank password required', 'wl.t2': 'Free to start', 'wl.t3': '100% private & encrypted',
+    'hero.proofN': '1,420+ people', 'hero.proofT': 'already reserved their iPhone spot',
+    'hero.demo': 'See why it works in 60 seconds',
+    'cmp.pill': 'No spreadsheets, no bill shock',
+    'cmp.h': 'Why spreadsheets and regular apps fail by day 10.',
+    'cmp.p': 'You do not need more charts. You need to know what you can spend today without opening a spreadsheet.',
+    'cmp.oldTag': 'Without rumo', 'cmp.oldH': 'Spreadsheets & bank-sync apps',
+    'cmp.old1t': 'Abandoned in week two', 'cmp.old1p': 'Logging every coffee by hand gets old fast, and by day 15 the numbers no longer match.',
+    'cmp.old2t': 'Ask for your bank password', 'cmp.old2p': 'Slow connections that break every week and misclassify transfers.',
+    'cmp.old3t': 'You only see the damage after the bill closes', 'cmp.old3p': 'Card bills come in high, duplicate subscriptions slip by, and you do not know where money went.',
+    'cmp.newTag': 'With rumo', 'cmp.newH': 'Your personal CFO on the Lock Screen',
+    'cmp.new1t': 'Sorted automatically', 'cmp.new1p': 'Paid with Apple Wallet or imported a statement? Every expense lands in the right category.',
+    'cmp.new2t': 'Zero bank passwords', 'cmp.new2p': 'You stay in full control. Encrypted statements and 1-click data deletion.',
+    'cmp.new3t': 'What is left right on your Lock Screen', 'cmp.new3p': 'Glance at your iPhone and know your daily allowance and whether the month is on pace.',
+    'cmp.footNote': '3 months of Pro free for early waitlist members',
     'demo.h': 'See rumo in 60 seconds.', 'demo.p': 'Your spending, the AI analysis and the widget in one quick tour. No sign-up.',
     'demo.soon': 'Demo video coming soon', 'demo.c1': 'Spending', 'demo.c2': 'AI analysis', 'demo.c3': 'Widget', 'demo.c4': 'Ask rumo', 'demo.play': 'Watch the demo',
-    'app.h': 'From expense to answer, effortlessly.', 'app.caption': 'Screens with sample data.', 'app.ctaP': 'Want to see this with your own spending?',
+    'app.h': 'From expense to answer, effortlessly.', 'app.caption': 'Screens with sample data.', 'app.ctaP': 'Want to ask these questions about your own spending?',
     'st1.h': 'Your spending, sorted on its own.', 'st1.p': 'Paid with Apple Wallet? The expense lands in rumo already categorized. You just check it.', 'st1.pill': 'Spending',
     'st2.h': 'The AI shows what changed.', 'st2.p': 'Dining went up, a subscription is duplicated, the budget is on track. Every note comes with the amount and one next step, no drama.', 'st2.pill': 'rumo analysis',
     'st3.h': 'Ask. It answers with your numbers.', 'st3.p': 'Can I order delivery today? How much did I spend on groceries? rumo answers from your own spending, no guesswork.', 'st3.pill': 'Ask rumo',
+    'st3.tryAria': 'Test questions for the AI', 'st3.tryLbl': 'Click to test the AI on the phone:',
     'tab.today': 'Today', 'tab.spend': 'Spending', 'tab.wallet': 'Wallet', 'tab.rumo': 'Rumo',
     'ls.date': 'Sat, October 17', 'ls.wTitle': 'October spending', 'ls.paceLbl': 'Daily pace', 'ls.leftLbl': 'Available',
     'ls.aiNote': 'AI CFO: budget on track. You still have about $95/day left in October.',
@@ -66,6 +82,10 @@
     's3.title': 'Ask rumo', 's3.sub': 'Answers with your numbers', 's3.q': 'Can I order delivery today without going over budget?',
     's3.a': 'You can. $1,335 is left for 14 days, about $95 a day. Your average order is $29.90.', 's3.src': 'Based on your October spending.',
     's3.s1': 'How much did I spend on groceries?', 's3.s2': 'Where can I save?', 's3.ph': 'Ask about your spending',
+    's3.a1': 'You spent $612.40 across 11 grocery trips—8% below September. You still have $237 left in your grocery target.',
+    's3.src1': '11 purchases in Groceries · October.',
+    's3.a2': 'Two easy wins: cancel the duplicate music subscription ($262.80/yr) and trim 2 delivery orders a week ($240/mo).',
+    's3.src2': 'Recurring charges & Dining analysis.',
     'w.month': 'October', 'w.of': 'of', 'w.today': 'Today', 'w.avg': 'Month average', 'w.perday': '/day', 'w.cats': 'By category', 'w.add': 'New expense',
     'wid.h': 'Your budget on the Home Screen.', 'wid.p': 'See what is left without opening the app. When an expense comes in, the widget updates on its own.',
     'wid.b1t': 'What is left', 'wid.b1p': 'The month budget and the daily average, always in view.',
@@ -83,16 +103,20 @@
     'faq.q3': 'How much does it cost?', 'faq.a3': 'Getting started is free. A Pro plan, with the full analysis and questions to the AI, comes later, and people on the waitlist hear about it first.',
     'faq.q4': 'Is it iPhone only?', 'faq.a4': 'The iPhone app comes first, with widgets. On the waitlist you can tell us you use Android, which helps us prioritize.',
     'faq.q5': 'What about investments?', 'faq.a5': 'They come in a later phase. First rumo takes care of your spending, which is where money slips away.',
-    'final.h': 'Join the waitlist and meet your CFO.', 'final.p': 'Get your invite as soon as the app opens.',
+    'final.h': 'Join the waitlist and meet your CFO.', 'final.p': 'Get your invite as soon as the app opens and lock in 3 months of rumo Pro free.',
+    'float.b': 'Founding access:', 'float.t': '3 months of rumo Pro free at launch',
     'ct.h': 'Talk to us.', 'ct.p': 'A question, an idea, a partnership or press? Write to us and we will reply.', 'ct.lang': 'We reply in Portuguese and English.',
     'ct.name': 'Name', 'ct.email': 'Email', 'ct.msg': 'Message', 'ct.send': 'Send message', 'ct.ok': 'Message sent. We will reply soon.', 'ct.sending': 'Sending...',
     'ft.tag': 'Your personal AI CFO.',
     'ft.legal': 'rumo offers educational information. It is not investment advice or tax consulting. The figures on the screens are sample data.',
     'ft.copy': '© 2026 rumo',
     'done.t': 'You are on the list.', 'done.s1': 'We will email', 'done.s2': 'as soon as the app opens.',
+    'done.posLbl': 'Your spot:', 'done.perk': '3 months of rumo Pro free reserved',
+    'done.posVip': '#929 · VIP Priority ✓',
     'done.more': 'Help us prioritize (30 seconds, optional)', 'done.q1': 'Where do you live?', 'done.q2': 'What weighs on you most?', 'done.q3': 'Which phone do you use?',
     'done.save': 'Save answers', 'done.thanks': 'Thank you. This helps us decide what to build first.',
-    'done.share': 'Know someone who also wonders where the money went?', 'done.wa': 'Send on WhatsApp', 'done.copy': 'Copy link', 'done.copied': 'Link copied',
+    'done.shareH': 'Want to skip the line and get the beta first?',
+    'done.share': 'Invite 1 friend on WhatsApp to jump 500 spots in the early-access queue.', 'done.wa': 'Send on WhatsApp (+500 spots)', 'done.copy': 'Copy link', 'done.copied': 'Link copied (+500 spots!)',
     'v.br': 'Brazil', 'v.us': 'United States', 'v.other': 'Somewhere else',
     'k.where': 'Not knowing where my money goes', 'k.subs': 'Forgotten subscriptions', 'k.over': 'Going over budget', 'k.save': 'Saving more', 'k.org': 'Organizing accounts and cards',
     'err.email': 'That email looks incomplete. Check it and try again.',
@@ -110,12 +134,17 @@
     'spend.left': 'Sobram {amt} em {days} dias', 'w.left': 'Sobram {amt}',
     'feed.now': 'agora', 'feed.today': 'hoje', 'feed.yday': 'ontem', 'via.pay': 'Apple Pay', 'via.card': 'Cartão',
     'banner.b': 'Categorizado como {cat}.',
+    's3.a1': 'Foram R$ 612,40 em 11 compras de mercado — 8% abaixo de setembro. Ainda sobram R$ 237 dentro da sua meta de mercado.',
+    's3.src1': '11 compras em Mercado · Outubro.',
+    's3.a2': 'Dois cortes fáceis: cancelar a assinatura de música duplicada (R$ 262,80/ano) e reduzir 2 pedidos de delivery na semana (R$ 240/mês).',
+    's3.src2': 'Análise de cobranças recorrentes e Restaurantes.',
+    'done.posVip': '#929 · Prioridade VIP ✓',
     'err.email': 'Esse e-mail parece incompleto. Confira e tente de novo.',
     'err.net': 'Não conseguimos salvar agora. A culpa é nossa. Tente de novo em instantes.',
     'err.req': 'Preencha todos os campos.',
     'wl.sending': 'Entrando…', 'ct.sending': 'Enviando…',
     'ct.ok': 'Mensagem enviada. A gente responde em breve.',
-    'done.copied': 'Link copiado',
+    'done.copied': 'Link copiado (+500 posições!)',
     'share.text': 'Achei um app que funciona como um CFO pessoal com IA para os meus gastos. Entra na lista:',
     'meta.title': document.title,
     'meta.desc': ($('meta[name="description"]') || {}).content || '',
@@ -564,6 +593,63 @@
       }), { rootMargin: '-42% 0px -42% 0px' });
       steps.forEach((s) => so.observe(s));
     }
+
+    // interactive "Ask rumo" prompt buttons in Chapter 3 and inside Screen 3
+    const AI_PROMPTS = [
+      { q: 's3.q', a: 's3.a', src: 's3.src' },
+      { q: 's3.s1', a: 's3.a1', src: 's3.src1' },
+      { q: 's3.s2', a: 's3.a2', src: 's3.src2' },
+    ];
+    function selectAiPrompt(idx) {
+      const p = AI_PROMPTS[idx] || AI_PROMPTS[0];
+      $$('.try-chip').forEach((btn) => {
+        const active = btn.dataset.aiQ === String(idx);
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (masterPhone && masterPhone.dataset.active !== '3') {
+        setActiveScreen(masterPhone, '3');
+      }
+      $$('[data-s3-chat]').forEach((chat) => {
+        const qEl = $('[data-chat-q]', chat);
+        const aEl = $('[data-chat-a]', chat);
+        const sEl = $('[data-chat-src]', chat);
+        if (qEl) { qEl.dataset.i18n = p.q; qEl.textContent = t(p.q); }
+        if (aEl) { aEl.dataset.i18n = p.a; aEl.textContent = t(p.a); }
+        if (sEl) { sEl.dataset.i18n = p.src; sEl.textContent = t(p.src); }
+        chat.classList.remove('is-answering', 'is-answered');
+        void chat.offsetWidth;
+        chat.classList.add(reduceMotion.matches ? 'is-answered' : 'is-answering');
+      });
+      track('ai_prompt_try', { idx });
+    }
+    document.addEventListener('click', (e) => {
+      const qBtn = e.target.closest('[data-ai-q]');
+      if (qBtn) selectAiPrompt(Number(qBtn.dataset.aiQ) || 0);
+    });
+
+    // sticky floating conversion bar: visible between Hero form and Final CTA unless already signed up
+    const floatBar = $('[data-float-cta]');
+    const heroForm = $('#entrar');
+    const finalSec = $('#lista');
+    if (floatBar && heroForm && finalSec) {
+      let pastHero = false;
+      let inFinal = false;
+      const syncFloat = () => {
+        const joined = Boolean(store.get('rumo_wl_email'));
+        const show = !joined && pastHero && !inFinal;
+        floatBar.hidden = joined;
+        floatBar.classList.toggle('is-visible', show);
+      };
+      new IntersectionObserver(([e]) => {
+        pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+        syncFloat();
+      }, { threshold: 0 }).observe(heroForm);
+      new IntersectionObserver(([e]) => {
+        inFinal = e.isIntersecting;
+        syncFloat();
+      }, { threshold: 0.08 }).observe(finalSec);
+    }
   }
 
   /* ------------------------------------------------------------------ leads */
@@ -600,23 +686,37 @@
   }
   function clearError(form) { const b = $('.wl__err', form); if (b) b.hidden = true; $$('[aria-invalid]', form).forEach((i) => i.removeAttribute('aria-invalid')); }
 
+  function boostQueueSpot() {
+    store.set('rumo_wl_boosted', '1');
+    $$('[data-wl-pos]').forEach((el) => {
+      el.dataset.i18n = 'done.posVip';
+      el.textContent = t('done.posVip');
+      const wrap = el.closest('.done__pos');
+      if (wrap) wrap.classList.add('is-boosted');
+    });
+  }
+
   function showDone(wl, email) {
     const form = $('.wl__form', wl); if (form) form.hidden = true;
+    const floatBar = $('[data-float-cta]');
+    if (floatBar) { floatBar.classList.remove('is-visible'); floatBar.hidden = true; }
     let done = $('.wl__done', wl);
     if (!done) {
       wl.appendChild(tpl('tpl-wl-done'));
       done = $('.wl__done', wl);
       capturePT(done); applyLang(lang, { silent: true });
       $$('[data-wl-email]', done).forEach((n) => { n.textContent = email; });
+      if (store.get('rumo_wl_boosted')) boostQueueSpot();
       const url = `${baseUrl()}?ref=${MY_REF}${lang === 'en' ? '&lang=en' : ''}`;
       const wa = $('[data-share="wa"]', done);
       wa.href = `https://wa.me/?text=${encodeURIComponent(`${t('share.text')} ${url}`)}`;
-      wa.addEventListener('click', () => track('share_whatsapp'));
+      wa.addEventListener('click', () => { boostQueueSpot(); track('share_whatsapp'); });
       const copy = $('[data-share="copy"]', done);
       copy.addEventListener('click', async () => {
         try { await navigator.clipboard.writeText(url); } catch (_) { return; }
+        boostQueueSpot();
         const label = $('span', copy); const old = label.textContent; label.textContent = t('done.copied');
-        track('share_copy'); setTimeout(() => { label.textContent = old; }, 1800);
+        track('share_copy'); setTimeout(() => { label.textContent = old; }, 2200);
       });
       $('[data-profile]', done).addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -689,8 +789,11 @@
 
   /* ------------------------------------------------------------------ promo video slot */
   function initDemo() {
-    const stage = $('[data-demo]'), v = CFG.DEMO_VIDEO || {};
+    const sec = $('[data-demo-sec]'), stage = $('[data-demo]'), v = CFG.DEMO_VIDEO || {};
     if (!stage || !v.provider || !v.src) return;
+    if (sec) sec.hidden = false;
+    const tourLink = $('[data-hero-tour]');
+    if (tourLink) tourLink.href = '#demo';
     stage.classList.add('has-video');
     $('[data-demo-play]').addEventListener('click', () => {
       let el;
