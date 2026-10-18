@@ -58,7 +58,7 @@
     'cmp.newTag': 'With rumo', 'cmp.newH': 'Your personal CFO on the Lock Screen',
     'cmp.new1t': 'Sorted automatically', 'cmp.new1p': 'Paid with Apple Wallet or imported a statement? Every expense lands in the right category.',
     'cmp.new2t': 'Zero bank passwords', 'cmp.new2p': 'You stay in full control. Encrypted statements and 1-click data deletion.',
-    'cmp.new3t': 'What is left right on your Lock Screen', 'cmp.new3p': 'Glance at your iPhone and know your daily allowance and whether the month is on pace.',
+    'cmp.new3t': 'Pace on the Lock Screen, amounts hidden', 'cmp.new3p': 'Glance at your iPhone and know right away if your month is on track—without exposing your amounts to people nearby.',
     'cmp.footNote': '3 months of Pro free for early waitlist members',
     'demo.h': 'See rumo in 60 seconds.', 'demo.p': 'Your spending, the AI analysis and the widget in one quick tour. No sign-up.',
     'demo.soon': 'Demo video coming soon', 'demo.c1': 'Spending', 'demo.c2': 'AI analysis', 'demo.c3': 'Widget', 'demo.c4': 'Ask rumo', 'demo.play': 'Watch the demo',
@@ -68,9 +68,16 @@
     'st3.h': 'Ask. It answers with your numbers.', 'st3.p': 'Can I order delivery today? How much did I spend on groceries? rumo answers from your own spending, no guesswork.', 'st3.pill': 'Ask rumo',
     'st3.tryAria': 'Test questions for the AI', 'st3.tryLbl': 'Click to test the AI on the phone:',
     'tab.today': 'Today', 'tab.spend': 'Spending', 'tab.wallet': 'Wallet', 'tab.rumo': 'Rumo',
-    'ls.date': 'Sat, October 17', 'ls.wTitle': 'October spending', 'ls.paceLbl': 'Daily pace', 'ls.leftLbl': 'Available',
-    'ls.aiNote': 'AI CFO: budget on track. You still have about $95/day left in October.',
-    'ls.hint': 'Tap the widget to open the dashboard',
+    'ls.date': 'Sat, October 17', 'ls.wTitle': 'October pace', 'ls.paceLbl': 'Daily pace', 'ls.leftLbl': 'Available',
+    'ls.ofPace': 'of monthly plan', 'ls.safeZone': 'Healthy buffer',
+    'ls.privLbl': 'Discreet mode', 'ls.privVal': '$ ••••',
+    'ls.paceCardLbl': 'Daily pace', 'ls.paceCardVal': 'Within target ✓',
+    'ls.catOk': 'On track',
+    'ls.today1': '1 logged · $ ••', 'ls.todayN': '{n} logged · $ ••',
+    'ls.notifT': 'New {cat} expense logged',
+    'ls.notifPriv': 'Amount hidden on Lock Screen',
+    'ls.aiNote': 'Discreet mode active: see if your month is on track without exposing your amounts. Unlock to view numbers.',
+    'ls.hint': 'Unlock to view amounts in the dashboard',
     's1.month': 'October', 's1.day': 'Day 17 of 31', 's1.ok': 'On track', 's1.over': 'A bit over pace', 's1.of': 'of',
     'spend.left': '{amt} left over {days} days', 'w.left': '{amt} left',
     'cat.groc': 'Groceries', 'cat.dine': 'Dining', 'cat.trans': 'Transport', 'cat.leis': 'Leisure', 'cat.oth': 'Other',
@@ -134,6 +141,8 @@
     'spend.left': 'Sobram {amt} em {days} dias', 'w.left': 'Sobram {amt}',
     'feed.now': 'agora', 'feed.today': 'hoje', 'feed.yday': 'ontem', 'via.pay': 'Apple Pay', 'via.card': 'Cartão',
     'banner.b': 'Categorizado como {cat}.',
+    'ls.today1': '1 gasto · R$ ••', 'ls.todayN': '{n} gastos · R$ ••',
+    'ls.notifT': 'Novo gasto em {cat} registrado',
     's3.a1': 'Foram R$ 612,40 em 11 compras de mercado — 8% abaixo de setembro. Ainda sobram R$ 237 dentro da sua meta de mercado.',
     's3.src1': '11 compras em Mercado · Outubro.',
     's3.a2': 'Dois cortes fáceis: cancelar a assinatura de música duplicada (R$ 262,80/ano) e reduzir 2 pedidos de delivery na semana (R$ 240/mês).',
@@ -264,6 +273,7 @@
     const tot = total(), left = BUDGET - tot, pace = (BUDGET * DAY) / DAYS;
     const pct = Math.min(100, Math.round((tot / BUDGET) * 100));
     const dailyLeft = Math.max(0, left / (DAYS - DAY));
+    const todayCnt = S.feed.filter((f) => f.when === 'now' || f.when === 'today').length;
     $$('[data-spend-total]', inst).forEach((el) => {
       const to = chars(tot, el.dataset.cents !== '0');
       if (o.animate) rollTo(el, to); else setChars(el, to);
@@ -275,6 +285,9 @@
     $$('[data-spend-bar]', inst).forEach((el) => el.style.setProperty('--w', `${Math.min(100, (tot / BUDGET) * 100).toFixed(2)}%`));
     $$('[data-spend-pct]', inst).forEach((el) => { el.textContent = `${pct}%`; });
     $$('[data-spend-daily]', inst).forEach((el) => { el.textContent = fmt(dailyLeft, false); });
+    $$('[data-ls-today-count]', inst).forEach((el) => {
+      el.textContent = t(todayCnt === 1 ? 'ls.today1' : 'ls.todayN').replace('{n}', todayCnt);
+    });
     $$('[data-spend-left]', inst).forEach((el) => { el.textContent = t('spend.left').replace('{amt}', fmt(left, false)).replace('{days}', DAYS - DAY); });
     $$('[data-spend-left-short]', inst).forEach((el) => { el.textContent = t('w.left').replace('{amt}', fmt(left, false)); });
     $$('[data-spend-avg]', inst).forEach((el) => { el.textContent = fmt(tot / DAY, true); });
@@ -337,14 +350,16 @@
   function notify(ev) {
     const title = `${ev.name}: ${fmt(ev.amt)}`;
     const body = t('banner.b').replace('{cat}', t('cat.' + ev.cat));
+    const lsTitle = t('ls.notifT').replace('{cat}', t('cat.' + ev.cat));
+    const lsBody = t('ls.notifPriv');
     $$('[data-banner]').forEach((b) => {
       $('[data-banner-t]', b).textContent = title;
       $('[data-banner-b]', b).textContent = body;
       b.classList.add('is-in'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('is-in'), 2900);
     });
     $$('[data-ls-notif]').forEach((n) => {
-      $('[data-ls-notif-t]', n).textContent = title;
-      $('[data-ls-notif-b]', n).textContent = body;
+      $('[data-ls-notif-t]', n).textContent = lsTitle;
+      $('[data-ls-notif-b]', n).textContent = lsBody;
       n.classList.add('is-in'); clearTimeout(n._t); n._t = setTimeout(() => n.classList.remove('is-in'), 3100);
     });
     $$('[data-lsw]').forEach((w) => {
