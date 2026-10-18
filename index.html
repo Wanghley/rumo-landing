@@ -314,6 +314,14 @@
         <article class="step" data-step="3">
           <h3 data-i18n="st3.h">Pergunte. Ela responde com os seus números.</h3>
           <p data-i18n="st3.p">Posso pedir delivery hoje? Quanto gastei com mercado? O rumo responde a partir dos seus próprios gastos, sem chute.</p>
+          <div class="try-ai" role="group" aria-label="Teste perguntas para a IA" data-i18n-aria="st3.tryAria">
+            <span class="try-ai__lbl"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-i18n="st3.tryLbl">Clique para testar a IA no celular:</span></span>
+            <div class="try-ai__chips">
+              <button type="button" class="try-chip is-active" data-ai-q="0" aria-pressed="true" data-i18n="s3.q">Posso pedir delivery hoje sem estourar o orçamento?</button>
+              <button type="button" class="try-chip" data-ai-q="1" aria-pressed="false" data-i18n="s3.s1">Quanto gastei com mercado?</button>
+              <button type="button" class="try-chip" data-ai-q="2" aria-pressed="false" data-i18n="s3.s2">Onde posso economizar?</button>
+            </div>
+          </div>
           <span class="pill"><svg class="ic" aria-hidden="true"><use href="#i-chat-teardrop-text"/></svg><span data-i18n="st3.pill">Pergunte ao rumo</span></span>
           <div class="step__phone" data-mount="phone" data-screens="3"></div>
         </article>
