@@ -243,8 +243,8 @@
           <li>
             <span class="cmp-ic cmp-ic--yes" aria-hidden="true"><svg class="ic"><use href="#i-check"/></svg></span>
             <div>
-              <b data-i18n="cmp.new3t">Quanto sobra na tela bloqueada</b>
-              <p data-i18n="cmp.new3p">Olhe para o iPhone e saiba na hora sua média do dia e se o mês está no ritmo.</p>
+              <b data-i18n="cmp.new3t">Ritmo na tela bloqueada, valores ocultos</b>
+              <p data-i18n="cmp.new3p">Olhe para o iPhone e saiba na hora se o mês está no ritmo — sem expor seus valores para quem estiver perto.</p>
             </div>
           </li>
         </ul>
@@ -518,7 +518,7 @@
   </div>
 </template>
 
-<!-- screen 0: the iPhone Lock Screen with the rich spend widget & live notification -->
+<!-- screen 0: the iPhone Lock Screen with the privacy-first spend widget & discreet notification -->
 <template id="tpl-s0">
   <section class="screen screen--lock" data-screen="0" data-tab="lock">
     <span class="ls-glow" aria-hidden="true"></span>
@@ -537,7 +537,7 @@
       <div class="lsw__head">
         <span class="lsw__brand">
           <svg viewBox="0 0 1308 1227" aria-hidden="true"><use href="#mark"/></svg>
-          <span data-i18n="ls.wTitle">Gasto em outubro</span>
+          <span data-i18n="ls.wTitle">Ritmo de outubro</span>
         </span>
         <span class="chip-ok lsw__chip" data-spend-chip data-state="ok">
           <svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg>
@@ -547,12 +547,12 @@
 
       <div class="lsw__hero">
         <div>
-          <span class="lsw__val" data-spend-total>R$ 1.664,60</span>
-          <p class="lsw__of"><span data-i18n="s1.of">de</span> <span data-amt="3000" data-cents="0">R$ 3.000</span> · <b data-spend-pct>55%</b></p>
+          <span class="lsw__val" data-spend-pct>55%</span>
+          <p class="lsw__of"><span data-i18n="ls.ofPace">do planejado</span> · <b data-i18n="ls.safeZone">Folga saudável</b></p>
         </div>
-        <div class="lsw__ring-pill">
-          <span class="lsw__ring-lbl" data-i18n="ls.paceLbl">Média/dia</span>
-          <b class="lsw__ring-val" data-spend-daily>R$ 95</b>
+        <div class="lsw__ring-pill lsw__ring-pill--priv">
+          <span class="lsw__ring-lbl"><svg class="ic" aria-hidden="true"><use href="#i-lock-simple"/></svg><span data-i18n="ls.privLbl">Modo discreto</span></span>
+          <b class="lsw__ring-val" data-i18n="ls.privVal">R$ ••••</b>
         </div>
       </div>
 
@@ -563,12 +563,12 @@
 
       <div class="lsw__stats">
         <div class="lsw__stat">
-          <span class="lsw__stat-lbl" data-i18n="ls.leftLbl">Disponível</span>
-          <b class="lsw__stat-val" data-spend-left-short>Sobram R$ 1.335</b>
+          <span class="lsw__stat-lbl" data-i18n="ls.paceCardLbl">Ritmo do dia</span>
+          <b class="lsw__stat-val" data-i18n="ls.paceCardVal">Dentro da meta ✓</b>
         </div>
         <div class="lsw__stat">
           <span class="lsw__stat-lbl" data-i18n="w.today">Hoje</span>
-          <b class="lsw__stat-val" data-spend-today>R$ 18,40</b>
+          <b class="lsw__stat-val" data-ls-today-count>1 gasto · R$ ••</b>
         </div>
       </div>
 
@@ -577,19 +577,19 @@
           <span class="lsw__dot lsw__dot--groc"></span>
           <span class="cname" data-i18n="cat.groc">Mercado</span>
           <span class="bar"><i></i></span>
-          <b data-cat-amt>R$ 612,40</b>
+          <b class="lsw__cat-ok" data-i18n="ls.catOk">No ritmo</b>
         </li>
         <li data-cat="dine" data-up>
           <span class="lsw__dot lsw__dot--dine"></span>
           <span class="cname" data-i18n="cat.dine">Restaurantes</span>
           <span class="bar"><i></i></span>
-          <b data-cat-amt>R$ 418,70</b>
+          <b class="lsw__cat-ok" data-i18n="ls.catOk">No ritmo</b>
         </li>
         <li data-cat="trans">
           <span class="lsw__dot lsw__dot--trans"></span>
           <span class="cname" data-i18n="cat.trans">Transporte</span>
           <span class="bar"><i></i></span>
-          <b data-cat-amt>R$ 204,10</b>
+          <b class="lsw__cat-ok" data-i18n="ls.catOk">No ritmo</b>
         </li>
       </ul>
     </div>
@@ -601,19 +601,19 @@
           <b>rumo · Apple Pay</b>
           <span data-i18n="banner.now">agora</span>
         </div>
-        <p class="ls-notif__t" data-ls-notif-t>Mercado Dom Pedro: R$ 42,18</p>
-        <p class="ls-notif__b"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-ls-notif-b>Categorizado como Mercado.</span></p>
+        <p class="ls-notif__t" data-ls-notif-t>Novo gasto em Mercado registrado</p>
+        <p class="ls-notif__b"><svg class="ic" aria-hidden="true"><use href="#i-lock-simple"/></svg><span data-ls-notif-b data-i18n="ls.notifPriv">Valor oculto na tela bloqueada</span></p>
       </div>
     </div>
 
     <div class="ls-ai">
-      <span class="ls-ai__ic"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span>
-      <p data-i18n="ls.aiNote">CFO IA: orçamento no ritmo. Você ainda tem cerca de <b>R$ 95/dia</b> livres em outubro.</p>
+      <span class="ls-ai__ic"><svg class="ic" aria-hidden="true"><use href="#i-lock-key"/></svg></span>
+      <p data-i18n="ls.aiNote">Modo discreto ativo: veja se o mês está no ritmo sem expor seus valores. Desbloqueie para abrir os números.</p>
     </div>
 
     <div class="ls-bottom">
       <span class="ls-quick"><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg></span>
-      <p class="ls-foot" data-i18n="ls.hint">Toque no widget para abrir o painel</p>
+      <p class="ls-foot" data-i18n="ls.hint">Desbloqueie para ver os valores no painel</p>
       <span class="ls-quick"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span>
     </div>
   </section>
