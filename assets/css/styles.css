@@ -387,6 +387,45 @@ h3 { font-size: clamp(1.75rem, 1.1rem + 1.9vw, 2.6rem); line-height: 1.08; }
 .btn--wa:hover { background: #3d2b27; }
 
 /* ==========================================================================
+   BEFORE VS AFTER: WHY RUMO WORKS
+   ========================================================================== */
+.compare { padding-block: clamp(40px, 6vw, 88px) var(--section); position: relative; z-index: 2; }
+.compare__head { display: flex; flex-direction: column; gap: 16px; max-width: 760px; margin-bottom: clamp(32px, 4.5vw, 56px); }
+.compare__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 32px); align-items: stretch; }
+.cmp-card {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+  padding: clamp(24px, 3.2vw, 38px); border-radius: var(--r-card); border: 1px solid var(--clay);
+}
+.cmp-card--old { background: rgba(235, 228, 216, 0.52); }
+.cmp-card--new {
+  background: linear-gradient(155deg, var(--white) 0%, #FDF9F0 65%, rgba(255, 194, 71, 0.16) 100%);
+  border: 1.5px solid rgba(46, 71, 53, 0.28);
+  box-shadow: var(--shadow-lift);
+}
+.cmp-card__head { display: flex; flex-direction: column; gap: 12px; }
+.cmp-badge {
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.01em;
+}
+.cmp-badge--old { background: rgba(45, 30, 27, 0.08); color: var(--ink-soft); }
+.cmp-badge--new { background: var(--moss); color: var(--parchment); }
+.cmp-badge--new .ic { width: 1.1em; height: 1.1em; }
+.cmp-list { display: flex; flex-direction: column; gap: 18px; padding: 0; margin: 0; list-style: none; }
+.cmp-list li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; align-items: start; }
+.cmp-ic {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 1rem; flex: none; margin-top: 2px;
+}
+.cmp-ic--no { background: rgba(168, 74, 58, 0.14); color: var(--terracotta); }
+.cmp-ic--yes { background: rgba(46, 71, 53, 0.14); color: var(--moss); }
+.cmp-ic--yes .ic { width: 16px; height: 16px; }
+.cmp-list b { display: block; font-size: 1.02rem; font-weight: 700; color: var(--espresso); margin-bottom: 3px; }
+.cmp-list p { font-size: 0.9375rem; line-height: 1.5; color: var(--ink-soft); }
+.cmp-card__foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 20px; border-top: 1px solid var(--clay);
+}
+.cmp-card__note { font-size: 0.8125rem; font-weight: 600; color: var(--moss); }
+
+/* ==========================================================================
    DEMO STAGE (slot for the promotional video)
    ========================================================================== */
 .demo { padding-block: 0 var(--section); position: relative; z-index: 2; }
